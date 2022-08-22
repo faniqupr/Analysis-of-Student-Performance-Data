@@ -1,0 +1,19 @@
+Analysis of Student Performance Data
+
+We have chosen to analyze data collected on students from two secondary schools in Portugal. Information was recorded by survey and school reports on both the educational careers and the personal lives of the students. This includes details on work habits and grades as well as family background and details on leisure time outside school. 
+
+Our goal is to determine if a student’s final grade can be accurately predicted based on a selection of these variables. Namely, we will attempt to answer the question: how well will a student perform in a given year?
+  
+  
+We will conduct our analysis using a multivariable k-nearest neighbors regression model. The variables we will be using as predictors include study time, which is the time (in hours) spent studying per week. This was recorded as an integer ranging from values 1-4 (1 for < 2 hours, 2 for 2 to 5 hours, 3 for 5 to 10 hours, or 4 for >10 hours); number of absences (this ranges from 0 to 93); and G1 and G2, which are the grades for the first and second periods respectively, with values ranging from 0 to 20. We will also use 5-fold cross-validation to choose the number of neighbors to minimize the RMSPE of our model. 
+
+	We chose these variables as we believe they most concisely offer a representation of a student’s participation and success in the classroom. These variables could also be found with minimal effort, as previous grades and number of absences would be recorded, and study time could be ascertained through a quick in-class survey. 
+	
+	We will visualize our results through  . . .  
+
+	 
+	We expect to find a high correlation between first and second period grades with the final grade. We also expect that students who study more and have fewer absences will have higher grades than those exhibiting the opposite behavior. 
+
+	These findings could be used to help students who might be struggling, especially those who are predicted to have lower/failing final grades. Students who are predicted to have lower than average grades or are seen to have a decrease in grades across the year could be offered additional help and support in (or outside of) their studies. 
+
+	All this could lead to further analysis on the prediction of final grades, perhaps using variables other than first and second period grades and could be used to predict grades throughout the year rather than just the final. It could also lead to questions on how a student’s number of failures or amount of free time could be predicted, as this might also help indicate if a student needs additional help for their schooling or mental health. 

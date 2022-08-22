@@ -1,0 +1,57 @@
+Analysis of Student Performance Data
+Background Information:
+
+We have chosen to analyze data collected on students from two secondary schools in Portugal. Information was recorded by survey and school reports on both the educational careers and the personal lives of the students. In total, 32 variables were recorded for the dataset. The data includes details on grades, work and health habits, as well as family background and details on time spent outside of school. For example, information such as parental work status; time spent travelling, studying, leisure; and other personal information like age, sex and school attended. 
+
+Question being answered in this project:
+
+Our goal is to determine if a student’s final grade (denoted as G3 in the data set) can be accurately predicted based on a set of chosen variables (first and second period grades, denoted as G1 and G2). Namely, we will attempt to answer the question: What final grade will a student receive?
+
+*LIBRARIES*
+
+First, we added the required libraries before beginning our analysis. In the code below, we have read the data from the web and assigned it to a data frame object called student_data. We counted the number of rows in the entire data frame before and after filtering for missing values. We can see that the number of rows did not change, therefore there are no missing observations. We then the display the first 6 rows of the data, which as we can see contains many variables. 
+
+*READ IN DATA AND CHECK NROW*
+
+To choose our predictors we know that, since we are predicting a quantitative variable, we must select all numeric variables. Then using cor(), we got the correlation coefficients for those variables with G3 and we chose the ones with the highest correlation coefficient with G3, our predicted variable, as these would offer the best prediction. Those with the highest correlation were G1 and G2. We then showed the correlation and linear relation for those variables with G3 using the ggpairs function.
+
+*SELECT AND USE GGPAIRS*
+
+The variables we will be using as predictors are G1 and G2 which are the grades for the first and second periods respectively, with values ranging from 0 to 20. We chose these variables as we believe they most concisely offer a representation of a student’s success in the classroom as well as they were good predictors due to their high correlation with G3. These variables could also be found with minimal effort, as previous grades would be recorded, therefore not requiring any additional effort to collect.
+
+*SUMMARY STATISTICS - ANSWERING EXPLORATORY QUESTIONS*
+
+We then set our seed so that our results are reproducible and then we divided our data into training and testing portions with a 75/25 split. We then calculated then mean and median for all 3 variables in the training data and aggregated them into a tidy table. 
+In the training data set, we observe:
+•	There are 488 observations
+•	There are no missing observations (as previously determined) and the data set is in a tidy format 
+•	The means and medians slightly increase across grading periods
+We then made histograms to visualize the distribution for each grading period (G1, G2 and G3). These will be helpful as they are a concise visualization of the variables in the training data set. As we can see from the histograms, the distributions show no severe skews, but do have some outliers at 0. 
+
+*HISTOGRAMS*
+
+We will conduct our analysis using a multivariable k-nearest neighbors regression model. We will also use 10-fold cross-validation to choose the number of neighbors to minimize the RMSPE of our model. We will visualize the results of our k-nearest neighbors regression model by creating a plot that visualizes the relationship between G3 with G1 and G2 along with the regression line. We expect to find that there is a strong positive relationship between final grades with G1 and G2. We also expect the predicted final grades to be relatively close to the actual final grades.
+
+*ANALYSIS*
+
+To begin we create a tuning model to determine the best k-value for our data and make a recipe that predicts G3 based on G1 and G2, and scales and centers all predictors. Next, we created our object to perform 10-fold cross-validation with our predicted variables as the strata; and made our workflow with our basic recipe and model. 
+We then tested k-values from 1-200 with cross-validation and collected the metrics for the k-values. By filtering for the lowest RMSE, we determined that a k-value of 8 would minimize our error (the lowest being 1.40). Using this k-value of 8 we built our new, best model and made a fit to be evaluated with the testing data. 
+Finally, we ran the testing data through the fit and collected the metrics to determine our RMPSE on the testing data. 
+
+Conclusion
+
+Firstly, through the building and tuning of our model, we found that the number of neighbours which minimized our mean-squared error was 8. Building and evaluating a model with this parameter and evaluating it using our testing data netted a RMSE of 1.04 compared to that of 1.41 from the testing data, which indicates that it actually did better of on our testing data than the training data. This value of 1.04 corresponds to the predicted error of the model when testing on new data, on the scale of the score (out of 20) for the final grade.
+
+This more or less aligned with what we had originally expected, as a predicted error of 1 (on a scale of 20) is fairly reliable, although we did not expect to see that large of a change between the RMSE and RMSPE.
+
+These findings could be used to help students who might be struggling, especially those who are predicted to have lower/failing final grades. It will also help the school to predict a student's final grades based on their previous performance, over time this could help the school find trends in performance which might allow it to improve upon itself. 
+
+All this could lead to further analysis on the prediction of final grades, perhaps using variables other than first and second period grades and could be used to predict grades throughout the year rather than just the final. It could also lead to questions on how a student’s number of failures or amount of free time could be predicted, as this might also help indicate if a student needs additional help for their schooling.
+
+Legend for tables and figures:
+
+
+Citations:
+“UCI Machine Learning Repository: Student Performance Data Set.” Uci.edu, 2014, www.archive.ics.uci.edu/ml/datasets/student+performance
+Cortez, Paulo, and Alice Silva. USING DATA MINING to PREDICT SECONDARY SCHOOL STUDENT PERFORMANCE. http://www3.dsi.uminho.pt/pcortez/student.pdf
+“Correlation Coefficient | R Tutorial.” R-Tutor.com, 2021, www.r-tutor.com/elementary-statistics/numerical-measures/correlation-coefficient
